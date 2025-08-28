@@ -7,9 +7,9 @@ Integrantes:  Nicolas Paul Ramirez Moreale
               Jose Martinez
               Camila Funes
 
-Lider:        Camila Funes
+Lider:        Nicolas Paul Ramirez Moreale
 
-Desarrolladores:  Nicolas Paul Ramirez Moreale
+Desarrolladores:  Camila Funes
                   Guillermo German Jalil
                   Sabrina Ianni Lucio
                   Jose Martinez
