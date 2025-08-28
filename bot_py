@@ -1,0 +1,387 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPkmUvnfnsjf2ugCR+xHNLS",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/camila-funes/Laboratorio1_PA/blob/main/bot_py\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "FGNivKD98KPF",
+        "outputId": "90e610bd-99ba-4dc7-fb86-3d32a14ba553"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cloning into 'Laboratorio1_PA'...\n",
+            "remote: Enumerating objects: 15, done.\u001b[K\n",
+            "remote: Counting objects:   6% (1/15)\u001b[K\rremote: Counting objects:  13% (2/15)\u001b[K\rremote: Counting objects:  20% (3/15)\u001b[K\rremote: Counting objects:  26% (4/15)\u001b[K\rremote: Counting objects:  33% (5/15)\u001b[K\rremote: Counting objects:  40% (6/15)\u001b[K\rremote: Counting objects:  46% (7/15)\u001b[K\rremote: Counting objects:  53% (8/15)\u001b[K\rremote: Counting objects:  60% (9/15)\u001b[K\rremote: Counting objects:  66% (10/15)\u001b[K\rremote: Counting objects:  73% (11/15)\u001b[K\rremote: Counting objects:  80% (12/15)\u001b[K\rremote: Counting objects:  86% (13/15)\u001b[K\rremote: Counting objects:  93% (14/15)\u001b[K\rremote: Counting objects: 100% (15/15)\u001b[K\rremote: Counting objects: 100% (15/15), done.\u001b[K\n",
+            "remote: Compressing objects:   8% (1/12)\u001b[K\rremote: Compressing objects:  16% (2/12)\u001b[K\rremote: Compressing objects:  25% (3/12)\u001b[K\rremote: Compressing objects:  33% (4/12)\u001b[K\rremote: Compressing objects:  41% (5/12)\u001b[K\rremote: Compressing objects:  50% (6/12)\u001b[K\rremote: Compressing objects:  58% (7/12)\u001b[K\rremote: Compressing objects:  66% (8/12)\u001b[K\rremote: Compressing objects:  75% (9/12)\u001b[K\rremote: Compressing objects:  83% (10/12)\u001b[K\rremote: Compressing objects:  91% (11/12)\u001b[K\rremote: Compressing objects: 100% (12/12)\u001b[K\rremote: Compressing objects: 100% (12/12), done.\u001b[K\n",
+            "remote: Total 15 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)\u001b[K\n",
+            "Receiving objects:   6% (1/15)\rReceiving objects:  13% (2/15)\rReceiving objects:  20% (3/15)\rReceiving objects:  26% (4/15)\rReceiving objects:  33% (5/15)\rReceiving objects:  40% (6/15)\rReceiving objects:  46% (7/15)\rReceiving objects:  53% (8/15)\rReceiving objects:  60% (9/15)\rReceiving objects:  66% (10/15)\rReceiving objects:  73% (11/15)\rReceiving objects:  80% (12/15)\rReceiving objects:  86% (13/15)\rReceiving objects:  93% (14/15)\rReceiving objects: 100% (15/15)\rReceiving objects: 100% (15/15), 5.38 KiB | 5.38 MiB/s, done.\n",
+            "Resolving deltas:   0% (0/2)\rResolving deltas:  50% (1/2)\rResolving deltas: 100% (2/2)\rResolving deltas: 100% (2/2), done.\n",
+            "/content/Laboratorio1_PA/Laboratorio1_PA\n"
+          ]
+        }
+      ],
+      "source": [
+        "!git clone https://github.com/camila-funes/Laboratorio1_PA.git\n",
+        "%cd Laboratorio1_PA"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install pyyaml slack_sdk\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "jQltEyNs_0GX",
+        "outputId": "84a9739f-7f2a-41af-8470-f66bb610e5c9"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: pyyaml in /usr/local/lib/python3.12/dist-packages (6.0.2)\n",
+            "Collecting slack_sdk\n",
+            "  Downloading slack_sdk-3.36.0-py2.py3-none-any.whl.metadata (15 kB)\n",
+            "Downloading slack_sdk-3.36.0-py2.py3-none-any.whl (293 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m293.9/293.9 kB\u001b[0m \u001b[31m14.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hInstalling collected packages: slack_sdk\n",
+            "Successfully installed slack_sdk-3.36.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%writefile bot.py\n",
+        "import json, os, random\n",
+        "from datetime import datetime\n",
+        "from pathlib import Path\n",
+        "from typing import List, Dict\n",
+        "\n",
+        "try:\n",
+        "    import yaml\n",
+        "except ImportError:\n",
+        "    yaml = None\n",
+        "\n",
+        "from slack_sdk import WebClient\n",
+        "from slack_sdk.errors import SlackApiError\n",
+        "\n",
+        "STATE_PATH = Path(__file__).parent / \"state.json\"\n",
+        "PROBLEMS_PATH = Path(__file__).parent / \"problems.yaml\"\n",
+        "\n",
+        "# ⚠️ Recomendado: usar variables de entorno (no hardcodear tokens).\n",
+        "# En Colab / tu Mac podés setear:\n",
+        "# export SLACK_BOT_TOKEN='xoxb-...'\n",
+        "# export SLACK_CHANNEL_ID='C0123456789'\n",
+        "BOT_TOKEN = os.getenv(\"SLACK_BOT_TOKEN\", \"\")\n",
+        "CHANNEL_ID = os.getenv(\"SLACK_CHANNEL_ID\", \"\")\n",
+        "\n",
+        "# Para evitar NameError si no existe problems.yaml\n",
+        "DEFAULT_PROBLEMS = [\n",
+        "    {\"title\": \"Placeholder\", \"prompt\": \"Agrega problemas al YAML.\", \"hints\": [], \"tags\": [\"setup\"]}\n",
+        "]\n",
+        "\n",
+        "def load_problems() -> List[Dict]:\n",
+        "    if PROBLEMS_PATH.exists():\n",
+        "        if yaml is None:\n",
+        "            raise RuntimeError(\"Instala pyyaml o elimina problems.yaml\")\n",
+        "        with PROBLEMS_PATH.open(\"r\", encoding=\"utf-8\") as f:\n",
+        "            data = yaml.safe_load(f) or []\n",
+        "            assert isinstance(data, list)\n",
+        "            return data\n",
+        "    return DEFAULT_PROBLEMS\n",
+        "\n",
+        "def init_state(n: int) -> Dict:\n",
+        "    order = list(range(n))\n",
+        "    random.shuffle(order)\n",
+        "    return {\"order\": order, \"pos\": 0, \"last_post\": None}\n",
+        "\n",
+        "def load_state(n: int) -> Dict:\n",
+        "    if STATE_PATH.exists():\n",
+        "        with STATE_PATH.open(\"r\", encoding=\"utf-8\") as f:\n",
+        "            state = json.load(f)\n",
+        "        if \"order\" not in state or len(state.get(\"order\", [])) != n:\n",
+        "            state = init_state(n)\n",
+        "    else:\n",
+        "        state = init_state(n)\n",
+        "    return state\n",
+        "\n",
+        "def save_state(state: Dict):\n",
+        "    STATE_PATH.write_text(\n",
+        "        json.dumps(state, ensure_ascii=False, indent=2),\n",
+        "        encoding=\"utf-8\"\n",
+        "    )\n",
+        "\n",
+        "def today_iso() -> str:\n",
+        "    return datetime.now().date().isoformat()\n",
+        "\n",
+        "def select_today(problems: List[Dict], state: Dict) -> Dict:\n",
+        "    if state.get(\"last_post\") == today_iso():\n",
+        "        return problems[state[\"order\"][state[\"pos\"] - 1]]\n",
+        "    pos = state.get(\"pos\", 0)\n",
+        "    idx = state[\"order\"][pos]\n",
+        "    problem = problems[idx]\n",
+        "    state[\"pos\"] = (pos + 1) % len(problems)\n",
+        "    state[\"last_post\"] = today_iso()\n",
+        "    return problem\n",
+        "\n",
+        "def build_message(problem: Dict) -> Dict:\n",
+        "    title = problem.get(\"title\")\n",
+        "    prompt = problem.get(\"prompt\")\n",
+        "    hints = problem.get(\"hints\", [])\n",
+        "    tags = problem.get(\"tags\", [])\n",
+        "    hints_md = \"\\n\".join([f\"• {h}\" for h in hints]) if hints else \"—\"\n",
+        "    tags_md = \", \".join(tags) if tags else \"principiante\"\n",
+        "    header = f\":snake: *Reto Python del día:* *{title}*\"\n",
+        "    body = f\"{prompt}\\n\\n*Pistas:*\\n{hints_md}\\n\\n*Etiquetas:* `{tags_md}`\"\n",
+        "    return {\n",
+        "        \"blocks\": [\n",
+        "            {\"type\": \"section\", \"text\": {\"type\": \"mrkdwn\", \"text\": header}},\n",
+        "            {\"type\": \"section\", \"text\": {\"type\": \"mrkdwn\", \"text\": body}},\n",
+        "            {\"type\": \"divider\"}\n",
+        "        ]\n",
+        "    }\n",
+        "\n",
+        "def post_to_slack(payload: Dict):\n",
+        "    client = WebClient(token=BOT_TOKEN)\n",
+        "    try:\n",
+        "        client.chat_postMessage(channel=CHANNEL_ID, **payload)\n",
+        "    except SlackApiError as e:\n",
+        "        raise RuntimeError(\n",
+        "            f\"Error Slack: {e.response.data if hasattr(e,'response') else e}\"\n",
+        "        )\n",
+        "\n",
+        "# ✅ EXCEPCIÓN requerida por el lab\n",
+        "def cargar_preguntas():\n",
+        "    raise Exception(\"Sorry, no hay implementación\")\n",
+        "\n",
+        "def main():\n",
+        "    # Validación de variables de entorno (como pide la guía)\n",
+        "    if not BOT_TOKEN or not CHANNEL_ID:\n",
+        "        raise RuntimeError(\"Faltan variables de entorno SLACK_BOT_TOKEN o SLACK_CHANNEL_ID\")\n",
+        "\n",
+        "    # 👉 Llamada que forzará conflicto más adelante entre ramas\n",
+        "    cargar_preguntas()\n",
+        "\n",
+        "    # El resto del flujo quedará inalcanzable por ahora (hasta integrar ramas)\n",
+        "    problems = load_problems()\n",
+        "    state = load_state(len(problems))\n",
+        "    prob = select_today(problems, state)\n",
+        "    payload = build_message(prob)\n",
+        "    post_to_slack(payload)\n",
+        "    save_state(state)\n",
+        "    print(\"Publicado:\", prob[\"title\"])\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    main()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "X4rBbMhy_7kw",
+        "outputId": "80747f99-650d-4c4c-ae47-f46b9e0337b0"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Overwriting bot.py\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "os.environ[\"SLACK_BOT_TOKEN\"] = \"fake_token\"\n",
+        "os.environ[\"SLACK_CHANNEL_ID\"] = \"fake_channel\"\n",
+        "\n",
+        "# Al ejecutar main() debería lanzar: Exception(\"Sorry, no hay implementación\")\n",
+        "try:\n",
+        "    import bot\n",
+        "    bot.main()\n",
+        "except Exception as e:\n",
+        "    print(\"Se lanzó la excepción esperada ->\", e)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LI8h7CWKAe3G",
+        "outputId": "76c03de2-272c-488c-c53c-778a2330959b"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Se lanzó la excepción esperada -> Faltan variables de entorno SLACK_BOT_TOKEN o SLACK_CHANNEL_ID\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "os.environ[\"SLACK_BOT_TOKEN\"] = \"fake_token\"\n",
+        "os.environ[\"SLACK_CHANNEL_ID\"] = \"fake_channel\""
+      ],
+      "metadata": {
+        "id": "PfMKMIUOAyu4"
+      },
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import bot\n",
+        "try:\n",
+        "    bot.main()\n",
+        "except Exception as e:\n",
+        "    print(\"Se lanzó la excepción esperada ->\", e)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-yEz-MfiBD6t",
+        "outputId": "120149ce-2e98-487d-fbf8-a7fda840db10"
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Se lanzó la excepción esperada -> Faltan variables de entorno SLACK_BOT_TOKEN o SLACK_CHANNEL_ID\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%pwd   # debe terminar en .../Laboratorio1_PA"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "MjdngeNSBfJr",
+        "outputId": "d1b58701-518d-4703-f467-4dcd1cf564ee"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'/content/Laboratorio1_PA/Laboratorio1_PA'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "os.environ[\"SLACK_BOT_TOKEN\"] = \"fake_token\"\n",
+        "os.environ[\"SLACK_CHANNEL_ID\"] = \"fake_channel\""
+      ],
+      "metadata": {
+        "id": "RTBN3pDCBiJm"
+      },
+      "execution_count": 16,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import importlib, bot\n",
+        "bot = importlib.reload(bot)  # fuerza a reevaluar BOT_TOKEN/CHANNEL_ID con los nuevos env"
+      ],
+      "metadata": {
+        "id": "MUnL2PuBBlIS"
+      },
+      "execution_count": 18,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "try:\n",
+        "    bot.main()\n",
+        "except Exception as e:\n",
+        "    print(\"Se lanzó la excepción esperada ->\", e)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "2oCS217MBq5h",
+        "outputId": "af23830e-33f6-4e98-f8b0-f4aa8c6b7629"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Se lanzó la excepción esperada -> Sorry, no hay implementación\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
