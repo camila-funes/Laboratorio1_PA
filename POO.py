@@ -75,7 +75,7 @@ def _nuevas_poo() -> List[Question]:
     ]
 
 
-def cargar_preguntas(problems_path: Path) -> None:
+def cargar_preguntas_poo(problems_path: Path) -> None:
     nuevas = _nuevas_poo()
 
     existentes: List[Dict] = []
@@ -89,3 +89,4 @@ def cargar_preguntas(problems_path: Path) -> None:
 
     with problems_path.open("w", encoding="utf-8") as f:
         yaml.safe_dump(existentes, f, allow_unicode=True, sort_keys=False)
+
