@@ -73,3 +73,19 @@ def _nuevas_poo() -> List[Question]:
             tags=["POO", "composicion", "intermedio"]
         ),
     ]
+
+
+def cargar_preguntas(problems_path: Path) -> None:
+    nuevas = _nuevas_poo()
+
+    existentes: List[Dict] = []
+    if problems_path.exists():
+        with problems_path.open("r", encoding="utf-8") as f:
+            existentes = yaml.safe_load(f) or []
+        if not isinstance(existentes, list):
+            existentes = []
+
+    existentes.extend(asdict(q) for q in nuevas)
+
+    with problems_path.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(existentes, f, allow_unicode=True, sort_keys=False)
